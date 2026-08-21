@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "pratikgadekar/my-cicd-app"
+        DOCKER_IMAGE = "pratik78124/my-cicd-app"
         DOCKER_TAG = "${BUILD_NUMBER}"
         CONTAINER_NAME = "my-cicd-app"
     }
