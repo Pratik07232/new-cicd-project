@@ -31,27 +31,25 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                echo '==> Testing Docker container...'
+       stage('Test') {
+    steps {
+        echo '==> Testing Docker container...'
+        sh '''
+            docker rm -f ${CONTAINER_NAME}-test || true
 
-                sh '''
-                    docker rm -f ${CONTAINER_NAME}-test || true
-                    
-                    docker run -d \
-                        --name ${CONTAINER_NAME}-test \
-                        -p 5001:5000 \
-                        ${DOCKER_IMAGE}:${DOCKER_TAG}
+            docker run -d \
+                --name ${CONTAINER_NAME}-test \
+                -p 5001:5000 \
+                ${DOCKER_IMAGE}:${DOCKER_TAG}
 
-                    sleep 5
+            sleep 5
+            curl -f http://localhost:5001/
 
-                    curl -f http://localhost:5001/
-
-                    docker stop ${CONTAINER_NAME}-test
-                    docker rm ${CONTAINER_NAME}-test
-                '''
-            }
-        }
+            docker stop ${CONTAINER_NAME}-test
+            docker rm ${CONTAINER_NAME}-test
+        '''
+    }
+}
 
         stage('Push to DockerHub') {
             steps {
