@@ -36,6 +36,8 @@ pipeline {
                 echo '==> Testing Docker container...'
 
                 sh '''
+                    docker rm -f ${CONTAINER_NAME}-test || true
+                    
                     docker run -d \
                         --name ${CONTAINER_NAME}-test \
                         -p 5001:5000 \
