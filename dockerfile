@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-Run pip install --no-cache-dir -r requirments.txt
+RUN pip install --no-cache-dir -r requirments.txt
 
 EXPOSE 5000
 
